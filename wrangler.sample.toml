@@ -1,0 +1,12 @@
+name = "weather-station"
+type = "webpack"
+webpack_config = "webpack.config.js"
+
+account_id = "<INSERT HERE>"
+workers_dev = true
+route = ""
+zone_id = ""
+
+kv_namespaces = [
+  { binding = "WEATHER", preview_id = "<INSERT HERE>", id = "<INSERT HERE>" }
+]
