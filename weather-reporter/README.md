@@ -8,6 +8,9 @@ Adapted from: https://www.tomshardware.com/how-to/get-wi-fi-internet-on-raspberr
 
 Assemble electronics according to [diagram](docs/circuit.png).
 
+Add DHT11 sensor to breadboard. Connect power and ground. Connect DHT out to Pico's
+GP16 pin.
+
 Download and install [CircuitPython 7.x firmware for
 Pico](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython).
 
@@ -18,6 +21,10 @@ add following libraries to the Pico's `lib` directory:
 - `adafruit_bus_device`
 - `adafruit_esp32spi`
 - `adafruit_requests.mpy`
+
+Download a 7.x release of [Adafruit CircuitPython
+DHT](https://github.com/adafruit/Adafruit_CircuitPython_DHT) and add
+`adafruit_dht.mpy` into Pico's `lib` directory.
 
 Copy the following files from this folder into the Pico's top-level directory:
 
