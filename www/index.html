@@ -1,0 +1,86 @@
+<html>
+
+<head>
+  <title>Weather Station</title>
+</head>
+
+<body>
+  <div style="height: 400px">
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script>
+    (async () => {
+      const API_URL = '<INSERT HERE>';
+      const res = await fetch(`${API_URL}/api/v1/weather`);
+      const data = await res.json();
+
+      const ctx = document.getElementById('myChart').getContext('2d');
+
+      const myChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: 'Temperature (C)',
+              yAxisID: 'temperature',
+              data: data.map(({ time, temperature }) => {
+                return { x: time, y: temperature }
+              }),
+              fill: false,
+              borderColor: 'red',
+              tension: 0.1,
+              showLine: true,
+            },
+            {
+              label: 'Humidity (%)',
+              yAxisID: 'humidity',
+              data: data.map(({ time, humidity }) => {
+                return { x: time, y: humidity }
+              }),
+              fill: false,
+              borderColor: 'cyan',
+              tension: 0.1,
+              showLine: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              type: 'time',
+              title: {
+                text: 'Time',
+                display: true,
+              },
+            },
+            temperature: {
+              position: 'left',
+              min: 0,
+              max: 100,
+              title: {
+                text: 'Temperature (C)',
+                display: true,
+              },
+            },
+            humidity: {
+              position: 'right',
+              min: 0,
+              max: 100,
+              title: {
+                text: 'Humidity (C)',
+                display: true,
+              },
+            }
+          },
+        },
+      });
+    })();
+  </script>
+</body>
+
+</html>
