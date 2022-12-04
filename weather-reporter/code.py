@@ -56,12 +56,17 @@ while True:
 
     print("Getting time...")
     r = requests.get(f"{TIME_API_URL}/api/timezone/{secrets['timezone']}")
+    if r.status_code != 200:
+        print(f"An error occured: {r.status_code}")
+        continue
+    print("Successfully got time!")
+
     time_ms = r.json()['unixtime'] * 1000
 
     print("Putting data in table...")
     key = timestamp2key(time_ms)
     form_boundary = "someBoundary"
-    data, _ = build_multipart_form({
+    data = build_multipart_form({
         "value": "picoValue",
         "metadata": json.dumps({
             "temperature": temperature,
@@ -76,6 +81,10 @@ while True:
             "Content-Type": f"multipart/form-data; boundary={form_boundary}",
         },
     )
+    if r.status_code != 200:
+        print(f'An error occured: {r.status_code}')
+        continue
+    print("Successfully put data in table!")
     print("Done!")
 
     # Update every hour
